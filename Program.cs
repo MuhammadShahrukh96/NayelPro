@@ -1,4 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using NayelPro.Data;
+using NayelPro.Models;
+using NayelPro.Services;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<CategoriesService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
